@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: course_postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: ead-course
+    ports:
+      - "5434:5432"
+    volumes:
+      - course-data:/var/lib/postgresql/data
+    networks:
+      - course-network
+
+  pgadmin:
+    container_name: course_pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5051:80"
+    depends_on:
+      - postgres
+    networks:
+      - course-network
+
+volumes:
+  course-data:
+
+networks:
+  course-network:
+    driver: bridge
