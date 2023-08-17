@@ -55,7 +55,6 @@ public class CourseController {
 
         var courseModel = courseModelOptional.get();
         BeanUtils.copyProperties(courseDto, courseModel);
-        courseModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
         return ResponseEntity.status(HttpStatus.OK).body(courseService.save(courseModel));
